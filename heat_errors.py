@@ -12,8 +12,8 @@ T = 0.5 # final time
 
 
 a = 1 # diffusion coefficient
-nu = 10
-Ns = np.array([10, 100, 1000]) # inner points for the space mesh
+nu = 1000
+Ns = np.array([10, 100, 1000, 10000]) # inner points for the space mesh
 dxs = []
 dts = []
 
@@ -80,7 +80,7 @@ for N in Ns:
     # compute solution
     print(int(T/dt))
     for j in range(int(T/dt)):
-        # if (j % 100 == 0) : print("check", j,"out of ", T/dt)
+        if (j % 100 == 0) : print("check", j,"out of ", T/dt)
         u_next = spsolve(matrix_bh, matrix_ch @ u_list[j][1:-1])
         u_next = np.concatenate(([0], u_next, [0]))
         u_list.append(u_next)
@@ -88,7 +88,8 @@ for N in Ns:
     """ --- end of computing solutions --- """
 
     e_h = u_sol - u_list[-1]
-    errors.append(np.max(np.abs(e_h)))
+    # errors.append(np.max(np.abs(e_h))) # error L^infty
+    errors.append(np.sqrt(dx) * np.linalg.norm(e_h, 2)) # errors L^2 discrete
 
     plt.plot(u_list[-1], ls='--', lw=2)
     plt.plot(u_sol, lw=0.7)
