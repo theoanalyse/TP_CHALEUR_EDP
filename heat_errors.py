@@ -90,14 +90,15 @@ for theta in thetas:
         """ --- end of computing solutions --- """
 
         e_h = u_sol - u_list[-1]
-        # errors.append(np.max(np.abs(e_h))) # error L^infty
-        errors.append(np.sqrt(dx) * np.linalg.norm(e_h, 2)) # errors L^2 discrete
+        errors.append(np.max(np.abs(e_h))) # error L^infty
+        # errors.append(np.sqrt(dx) * np.linalg.norm(e_h, 2)) # errors L^2 discrete
 
+        '''
         plt.plot(u_list[-1], ls='--', lw=2, c='blue', label="Approx.")
         plt.plot(u_sol, lw=0.7, c='blue', label="Exact.")
         plt.legend()
         plt.show()
-    
+        '''
     
     errors_list.append(errors)
 
@@ -110,9 +111,12 @@ print(errors_list)
 
 methods = ["Explicit", "Implicit", "Crank-Nicolson"]
 
-plt.loglog(dxs, dxs, label="O(dx)")
-plt.loglog(dxs, dxs*dxs, label="O(dx^2)")
+plt.loglog(dxs, dxs, marker='o', label="O(dx)")
+plt.loglog(dxs, dxs*dxs, marker='o', label="O(dx^2)")
 for j in range(len(errors_list)):
-    plt.loglog(dxs, errors_list[j], ls='--', label=methods[j])
+    plt.loglog(dxs, errors_list[j], marker='o', ls='--', label=methods[j])
+plt.xlabel(r'$\delta x$')
+plt.ylabel('')
+plt.title(r"Calcul de l'erreur en norme ${L}^{\infty}$")
 plt.legend()
 plt.show()
