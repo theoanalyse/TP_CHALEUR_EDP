@@ -3,7 +3,7 @@ from numpy import sin, cos, exp, pi
 import matplotlib.pyplot as plt
 import scipy.sparse as sp
 from scipy.sparse.linalg import spsolve
-plt.rc('figure',  figsize=(16/1.5, 9/1.5))
+# plt.rc('figure',  figsize=(16/1.5, 9/1.5))
 plt.style.use('ggplot')
 
 
@@ -56,6 +56,7 @@ for theta in thetas:
     )
 
     u_list = [u_0]
+    energy = [(np.sqrt(dx) * np.linalg.norm(u_0, 2))**2]
 
     """ IMPLEMENTATION OF THETA METHOD """
 
@@ -68,11 +69,15 @@ for theta in thetas:
         u_next = spsolve(matrix_bh, matrix_ch @ u_list[j][1:-1])
         u_next = np.concatenate(([0], u_next, [0]))
         u_list.append(u_next)
+
+        energy.append((np.sqrt(dx) * np.linalg.norm(u_next, 2))**2)
     """ --- end of computing solutions --- """
 
+        
+
     plt.plot(x_mesh, u_list[int(0.01/dt)], marker='o', markevery=N//2, ls="--", c=cols[theta], label=rf"$\theta =$, {theta}, T = 0.01")
-    plt.plot(x_mesh, u_list[int(0.1/dt)], marker='s', markevery=N//2, ls="--", c=cols[theta], label=rf"$\theta =$, {theta}, T = 0.1")
-    plt.plot(x_mesh, u_list[int(2/dt)], marker='*', markevery=N//2, ls="--", c=cols[theta], label=rf"$\theta =$, {theta}, T = 3")
+    # plt.plot(x_mesh, u_list[int(0.1/dt)], marker='s', markevery=N//2, ls="--", c=cols[theta], label=rf"$\theta =$, {theta}, T = 0.1")
+    # plt.plot(x_mesh, u_list[int(2/dt)], marker='*', markevery=N//2, ls="--", c=cols[theta], label=rf"$\theta =$, {theta}, T = 3")
 
 print("nu =", nu)
 
@@ -80,5 +85,13 @@ print("nu =", nu)
 
 plt.legend()
 plt.title(r"Calcul de la solution $\mathbf{u}$ aux temps $T_1 = 0.01$, $T_2 = 0.1$, $T_3 = 2$ à l'aide des trois schémas")
+plt.show()
+
+plt.plot(np.linspace(0, 1, int(T/dt) + 1), energy, marker='o',
+         markevery=int(T/dt)//6, c='blue', ls='--', dashes=(3, 3), lw=2, label="Approx.")
+plt.xlabel(r'$t$ (temps)')
+plt.ylabel(r'$\mathcal{E}^n$ (energie)')
+plt.legend()
+plt.title(r"Énergie discrète $\mathbf{\mathcal{E}}^n$ de la solution $\mathbf{u}_h$")
 plt.show()
 """ --- end of plotting stuff --- """
