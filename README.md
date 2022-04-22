@@ -1,2 +1,3 @@
-# TP_CHALEUR_EDP
-Simulation de l'équation de la chaleur 1D
+# Simulations numérique des solutions du problème aux limites de la chaleur
+
+Hello
