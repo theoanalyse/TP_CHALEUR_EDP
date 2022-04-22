@@ -2,7 +2,7 @@
 
 ---
 
-Bienvenue sur la page Github consacrée à la simulation des solutions du problème considéré dans l'article associé.
+Bienvenue sur la page Github consacrée à la simulation des solutions du problème considéré dans le rapport associé. Vous trouverez ci-dessous le rôle de chacun des scripts utilisés pour la création des figures.
 
 - discontinuous case.py : Calcul des solutions approchées (pour le choix $u_0$ discontinu) du schéma et calcul de l'énergie.
 - heat_equation.py : Script pour calculer les solution approchées (pour le choix $u_0$ continu) du schéma et les comparer avec les solutions exactes + calcul et affichage de l'énergie en fonction du temps 
