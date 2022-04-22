@@ -1,3 +1,5 @@
-# Simulations numérique des solutions du problème aux limites de la chaleur
+# EDP Parabolique de la chaleur : Simulation et Visualisation
 
-Hello
+---
+
+Bienvenue sur la page Github consacrée à la simulation des solutions du problème considéré 
